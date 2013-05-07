@@ -20,37 +20,82 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <ul class="nav">
-                <li><a href="#"  class="navbar-brand">UI Utils</a></li>
-                <li class="dropdown" ng-show="!isLoading"  style="display: none">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li ng-repeat="s in sections"><a href="#{{s.id}}"> {{s.name}} </a></li>
-                    </ul>
-                </li>
+          <div class="dropdown pull-left">
+            <a class="brand dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+              UI Utils
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <li><a href="https://github.com/angular-ui/"><strong>Related Projects:</strong></a></li>
+              <li class="divider"></li>
+              <li><a href="http://angular-ui.github.io/">AngularUI</a></li>
+              <li><a href="http://angular-ui.github.io/bootstrap/">UI Bootstrap</a></li>
+              <li><a href="http://angular-ui.github.io/ng-grid/">Grid</a></li>
+              <li><a href="https://github.com/angular-ui/AngularJs.tmbundle">AngularJS.tmbundle</a></li>
+              <li><a href="http://angular-ui.github.io/router/">Router <span class="label label-success">New!</span></a></li>
+              <li><a href="http://angular-ui.github.io/Tips-n-Tricks/">Tips-n-Tricks <span class="label">WIP</span></a></li>
             </ul>
+          </div>
+          <div class="nav-collapse pull-right">
+            <ul class="nav">
+              <li class="dropdown" ng-show="!isLoading"  style="display: none">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li ng-repeat="s in sections"><a href="#{{s.id}}"> {{s.name}} </a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </div>
         </div>
     </div>
 </div>
+<div style="margin: 32px;"></div>
 
 <!-- Le header
 ================================================== -->
-<header id="overview" class="jumbotron">
+<header class="hero-unit" id="overview">
+  <div class="container">
+
+    <h1>UI Utils</h1>
+
+    <p>Swiss-Army-Knife of <strong><a href="http://angularjs.org">AngularJS</a></strong> tools (with no external dependencies!)</p>
+
+    <p class="btn-group">
+      <a class="btn" href="https://github.com/angular-ui/ui-utils"><i class="icon-github"></i> Code on Github</a>
+      <a class="btn btn-primary" href="https://github.com/angular-ui/ui-utils/tree/gh-pages/build">
+        <i class="icon-download-alt icon-white"></i> Download <small>(0.0.1)</small>
+      </a>
+    </p>
+  </div>
+  <div class="bs-docs-social">
     <div class="container">
-        <div class="row">
-            <div class="span3">
-                <img src="assets/img/UI_Shield.png" alt="" width="200" height="211" id="bigLogo"/>
-            </div>
-            <div class="span9">
+      <ul class="bs-docs-social-buttons">
+        <li>
+          <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&amp;repo=ui-utils&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+        </li>
+        <li>
+          <iframe src="http://ghbtns.com/github-btn.html?user=angular-ui&amp;repo=ui-utils&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="95" height="20"></iframe>
+        </li>
+        <li>
+          <!-- Place this tag where you want the +1 button to render. -->
+          <div class="g-plusone" data-size="medium"></div>
 
-                <h1>UI Utils</h1>
-
-                <h3>Swiss-Army-Knife of AngularJS tools (with no external dependencies!)</h3>
-
-            </div>
-        </div>
-
+          <!-- Place this tag after the last +1 button tag. -->
+          <script type="text/javascript">
+            (function () {
+              var po = document.createElement('script');
+              po.type = 'text/javascript';
+              po.async = true;
+              po.src = 'https://apis.google.com/js/plusone.js';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(po, s);
+            })();
+          </script>
+        </li>
+      </ul>
     </div>
+  </div>
 </header>
 
 <!-- Le main
