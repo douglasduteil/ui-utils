@@ -1,6 +1,7 @@
-<!-- Le content - v0.0.1 - 2013-05-07
+<!-- Le content - v0.0.3 - 2013-05-23
 ================================================== -->
-<script>
+<script>requirejs(["core/demo.js"]);</script>
+<div id="utils" ng-non-bindable><script>
   function EventCtrl($scope) {
     $scope.blurCallback = function () {
       alert('Goodbye');
@@ -141,71 +142,31 @@ $scope.tokens = { name:&#39;Bob&#39;, subject:&#39;wife&#39; };
 &lt;/style&gt;
 </pre>
 </section>
-<style>
-  .piped-list li {
-    display: inline-block;
-    border-left: 2px solid;
-    margin-left: 5px;
-    padding-left: 10px;
-  }
-
-  .piped-list li:first-child {
-    border-left: none;
-    margin-left: 0;
-  }
-</style>
-
-<section id="if">
+<section id="indeterminate">
   <div class="page-header">
-    <h1>If</h1>
+    <h1>Indeterminate checkbox</h1>
   </div>
   <div class="row">
     <div class="span6">
       <h3>What?</h3>
 
-      <p>Remove elements from the DOM completely instead of just hiding it.</p>
+      <p>Provides an easy way to toggle a checkbox input's special 'indeterminate' property. This is a visual toggle only and in no way affects the model or value outside of native browser behavior at this time.</p>
 
-      <div class="well">
-        <h4>Using <code>ng-show</code></h4>
-        <ul class="piped-list">
-          <li ng-show="false">First</li>
-          <li>Middle</li>
-          <li>Last</li>
-        </ul>
-        <h4>Using <code>ui-if</code></h4>
-        <ul class="piped-list">
-          <li ui-if="false">First</li>
-          <li>Middle</li>
-          <li>Last</li>
-        </ul>
-      </div>
+      <p class="well">
+        Indeterminate: <input type="checkbox" ui-interminate="isKnown" readonly>
+        Toggle indeterminate here: <input type="checkbox" ng-model="isKnown">
+      </p>
+
       <h3>Why?</h3>
 
-      <p>In situations where DOM traversal matters (such as the CSS selectors <code>:first-child</code>,
-        <code>:last-child</code> and <code>:nth()-child</code>), simply hiding elements is not enough.</p>
+      <p>Convenience.</p>
     </div>
     <div class="span6">
-
       <h3>How?</h3>
-<pre class="prettyprint">
-&lt;style&gt;
-.piped-list li {
-    display: inline-block;
-    border-left: 2px solid;
-    margin-left: 5px;
-    padding-left: 10px;
-}
-.piped-list li:first-child {
-    border-left: none;
-    margin-left: 0;
-}
-&lt;/style&gt;
 
-&lt;ul class=&quot;piped-list&quot;&gt;
-    &lt;li ui-if=&quot;false&quot;&gt;First&lt;/li&gt;
-    &lt;li&gt;Middle&lt;/li&gt;
-    &lt;li&gt;Last&lt;/li&gt;
-&lt;/ul&gt;
+<pre class="prettyprint">
+Indeterminate: &lt;input type=&quot;checkbox&quot; ui-interminate=&quot;isKnown&quot; readonly&gt;
+Toggle indeterminate here: &lt;input type=&quot;checkbox&quot; ng-model=&quot;isKnown&quot;&gt;
 </pre>
     </div>
   </div>
@@ -861,4 +822,4 @@ Bar rule passes: {{!!myForm.myInput.$error.bar}}
 </pre>
     </div>
   </div>
-</section>
+</section></div>

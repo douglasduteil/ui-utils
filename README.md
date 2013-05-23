@@ -1,56 +1,88 @@
-# AngularUI - The companion suite for AngularJS
+# Angular UI Docs
+Doc generator of Angular-ui modules. 
 
-***
+This generator use Grunt, AngularJS, RequireJS and jQuery.
 
-[![Build Status](https://secure.travis-ci.org/angular-ui/ui-utils.png)](http://travis-ci.org/angular-ui/ui-utils)
+## How to add it !
 
-## Usage
+Add it as a submodule of your module.
 
-### Requirements
-
-* **AngularJS v1.0.0+** is currently required.
-* **jQuery*** Until the refactor is complete, some directives still require jQuery
-
-## Installation
-
-Add the specific modules to your dependencies, or add the entire lib by depending on `ui.utils`
-
-```javascript
-angular.module('myApp', ['ui.keypress', 'ui.event', ...])
-// or if ALL modules are loaded along with modules/utils.js
-angular.module('myApp', ['ui.utils'])
+```sh
+git submodule add git://github.com/angular-ui/angular-ui-docs.git out
 ```
 
-Each directive and filter is now it's own module and will have a relevant README.md in their respective folders
+**It's working with ssh deploy key !**
+You can find a quick tuto [here](https://gist.github.com/douglasduteil/5525750#file-travis-secure-key-sh).
 
-## Development
+After you added your deploy key to GitHub and Travis (in  `.travis.yml`).  Add a global value with your repo name, like : 
 
-At this time, we do not have a build script. You must include all `.js` files you wish to work on.
-We will likely be adding a `Gruntfile.js` in the near future for this
-
-### Requirements
-
-0. Install [Node.js](http://nodejs.org/) and NPM (should come with)
-
-1. Install global dependencies `grunt-cli`, `bower`, and `karma`:
-
-    ```bash
-    $ npm install -g karma grunt-cli bower
-    ```
-
-2. Install local dependencies:
-
-    ```bash
-    $ npm install
-    $ bower install
-    ```
-
-### Running Tests
-
-Make sure all tests pass in order for your Pull Request to be accepted
-
-You can choose what browsers to test in: `Chrome,ChromeCanary,Firefox,PhantomJS`
-
-```bash
-$ karma start --browsers=Chrome,Firefox test.conf.js
 ```
+env:
+  global:
+  - REPO="git@github.com:<org>/<repo>.git"
+  - secure: ! 'MR37oFN+bprRlI1/YS3...etc...
+```
+
+Then add the scripts and limit the build-able branches.
+
+```
+before_script: out/.travis/before_script.sh
+after_success: out/.travis/after_success.sh
+branches:
+  only:
+  - <branch>
+```
+
+__Don't forget to create and push an orphan `gh-pages` branch.__
+
+
+## Make your demo !
+
+Travis will automatically run `grunt build-doc` ! 
+First you need to generate the `index.html` using [grunt-contrib-copy](https://github.com/gruntjs/grunt-contrib-copy)
+
+```Javascript
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    meta: {
+        view : {
+            humaName : "UI <repo>",
+            repoName : "<the github repo name>"
+          }
+    },
+    copy: {
+      template : {
+        options : {processContent : (function(content){
+          return grunt.template.process(content);
+        })},
+        files: [
+          {src: ['out/.tmpl/index.tmpl'], dest: 'out/index.html'}
+        ]
+      }
+    }
+```
+
+This will generate `index.html` using :
+ - the description in the `package.json`,
+ - the `meta.view.humaName` as title of the demo site,
+ - the `meta.view.repoName` in the github links,
+
+Then, like `index.html` automatically include a `demo.html` file, you will have to copy yours.
+
+```Javascript
+  grunt.initConfig({
+    copy: {
+        main: {
+        files: [
+          {src: ['demo/demo.html'], dest: 'out/demos.html', filter: 'isFile'}
+          ]
+      }
+    }
+});
+```
+
+In this file you can use RequireJS, AngularJS and jQuery.
+I added a `requireCSS` as a HACK  'cause  it's home made...
+
+In bonus, the id of each section tag in the page are drawn into a _Module_ menu at the top right of the page.
+
