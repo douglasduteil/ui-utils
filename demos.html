@@ -1,4 +1,4 @@
-<!-- Le content - v0.0.3 - 2013-05-23
+<!-- Le content - v0.0.3 - 2013-06-02
 ================================================== -->
 <script>requirejs(["core/demo.js"]);</script>
 <div id="utils" ng-non-bindable><script>
@@ -153,8 +153,8 @@ $scope.tokens = { name:&#39;Bob&#39;, subject:&#39;wife&#39; };
       <p>Provides an easy way to toggle a checkbox input's special 'indeterminate' property. This is a visual toggle only and in no way affects the model or value outside of native browser behavior at this time.</p>
 
       <p class="well">
-        Indeterminate: <input type="checkbox" ui-interminate="isKnown" readonly>
-        Toggle indeterminate here: <input type="checkbox" ng-model="isKnown">
+        <label>Indeterminate: <input type="checkbox" ui-indeterminate="isKnown" readonly></label><br>
+        <label>Toggle indeterminate here: <input type="checkbox" ng-model="isKnown"></label>
       </p>
 
       <h3>Why?</h3>
@@ -165,12 +165,13 @@ $scope.tokens = { name:&#39;Bob&#39;, subject:&#39;wife&#39; };
       <h3>How?</h3>
 
 <pre class="prettyprint">
-Indeterminate: &lt;input type=&quot;checkbox&quot; ui-interminate=&quot;isKnown&quot; readonly&gt;
+Indeterminate: &lt;input type=&quot;checkbox&quot; ui-indeterminate=&quot;isKnown&quot; readonly&gt;
 Toggle indeterminate here: &lt;input type=&quot;checkbox&quot; ng-model=&quot;isKnown&quot;&gt;
 </pre>
     </div>
   </div>
 </section>
+
 <section id="inflector">
   <div class="page-header">
     <h1>Inflector</h1>
