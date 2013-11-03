@@ -1,9 +1,15 @@
 {
   "name": "angular-ui-docs",
   "version": "0.0.0",
-  "commit": "532360bceb23b15f31ab5214dbfa0a9d56c41b78",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/angular-ui/angular-ui-docs.git"
-  }
+  "description": "Doc generator of Angular-ui modules.",
+  "homepage": "https://github.com/douglasduteil/angular-ui-docs",
+  "authors": [
+    "Douglas Duteil <douglasduteil@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ]
 }

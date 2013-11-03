@@ -1,6 +1,6 @@
 /**
  * angular-ui-utils - Swiss-Army-Knife of AngularJS tools (with no external dependencies!)
- * @version v0.0.4 - 2013-07-29
+ * @version v0.0.4 - 2013-11-03
  * @link http://angular-ui.github.com
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -564,7 +564,7 @@ angular.module('ui.mask', [])
             }
             iElement.bind('blur', blurHandler);
             iElement.bind('mousedown mouseup', mouseDownUpHandler);
-            iElement.bind('input keyup click', eventHandler);
+            iElement.bind('input keyup click focus', eventHandler);
             eventsBound = true;
           }
 
@@ -578,6 +578,7 @@ angular.module('ui.mask', [])
             iElement.unbind('input', eventHandler);
             iElement.unbind('keyup', eventHandler);
             iElement.unbind('click', eventHandler);
+            iElement.unbind('focus', eventHandler);
             eventsBound = false;
           }
 
@@ -955,7 +956,8 @@ angular.module('ui.route', []).directive('uiRoute', ['$location', '$parse', func
 
         // Used by href and ngHref
         function staticWatcher(newVal) {
-          if ((hash = newVal.indexOf('#')) > -1){
+          var hash = newVal.indexOf('#');
+          if (hash > -1){
             newVal = newVal.substr(hash + 1);
           }
           watcher = function watchHref() {
@@ -965,7 +967,8 @@ angular.module('ui.route', []).directive('uiRoute', ['$location', '$parse', func
         }
         // Used by uiRoute
         function regexWatcher(newVal) {
-          if ((hash = newVal.indexOf('#')) > -1){
+          var hash = newVal.indexOf('#');
+          if (hash > -1){
             newVal = newVal.substr(hash + 1);
           }
           watcher = function watchRegex() {
@@ -1023,6 +1026,7 @@ angular.module('ui.scrollfix',[]).directive('uiScrollfix', ['$window', function 
     link: function (scope, elm, attrs, uiScrollfixTarget) {
       var top = elm[0].offsetTop,
           $target = uiScrollfixTarget && uiScrollfixTarget.$element || angular.element($window);
+
       if (!attrs.uiScrollfix) {
         attrs.uiScrollfix = top;
       } else if (typeof(attrs.uiScrollfix) === 'string') {
@@ -1034,7 +1038,7 @@ angular.module('ui.scrollfix',[]).directive('uiScrollfix', ['$window', function 
         }
       }
 
-      $target.bind('scroll', function () {
+      function onScroll() {
         // if pageYOffset is defined use it, otherwise use other crap for IE
         var offset;
         if (angular.isDefined($window.pageYOffset)) {
@@ -1048,6 +1052,13 @@ angular.module('ui.scrollfix',[]).directive('uiScrollfix', ['$window', function 
         } else if (elm.hasClass('ui-scrollfix') && offset < attrs.uiScrollfix) {
           elm.removeClass('ui-scrollfix');
         }
+      }
+
+      $target.on('scroll', onScroll);
+
+      // Unbind scroll event handler when directive is removed
+      scope.$on('$destroy', function() {
+        $target.off('scroll', onScroll);
       });
     }
   };
@@ -1222,22 +1233,62 @@ angular.module('ui.validate',[]).directive('uiValidate', function () {
         ctrl.$parsers.push(validateFn);
       });
 
+      function apply_watch(watch)
+      {
+          //string - update all validators on expression change
+          if (angular.isString(watch))
+          {
+              scope.$watch(watch, function(){
+                  angular.forEach(validators, function(validatorFn){
+                      validatorFn(ctrl.$modelValue);
+                  });
+              });
+              return;
+          }
+
+          //array - update all validators on change of any expression
+          if (angular.isArray(watch))
+          {
+              angular.forEach(watch, function(expression){
+                  scope.$watch(expression, function()
+                  {
+                      angular.forEach(validators, function(validatorFn){
+                          validatorFn(ctrl.$modelValue);
+                      });
+                  });
+              });
+              return;
+          }
+
+          //object - update appropriate validator
+          if (angular.isObject(watch))
+          {
+              angular.forEach(watch, function(expression, validatorKey)
+              {
+                  //value is string - look after one expression
+                  if (angular.isString(expression))
+                  {
+                      scope.$watch(expression, function(){
+                          validators[validatorKey](ctrl.$modelValue);
+                      });
+                  }
+
+                  //value is array - look after all expressions in array
+                  if (angular.isArray(expression))
+                  {
+                      angular.forEach(expression, function(intExpression)
+                      {
+                          scope.$watch(intExpression, function(){
+                              validators[validatorKey](ctrl.$modelValue);
+                          });
+                      });
+                  }
+              });
+          }
+      }
       // Support for ui-validate-watch
-      if (attrs.uiValidateWatch) {
-        watch = scope.$eval(attrs.uiValidateWatch);
-        if (angular.isString(watch)) {
-          scope.$watch(watch, function(){
-            angular.forEach(validators, function(validatorFn, key){
-              validatorFn(ctrl.$modelValue);
-            });
-          });
-        } else {
-          angular.forEach(watch, function(expression, key){
-            scope.$watch(expression, function(){
-              validators[key](ctrl.$modelValue);
-            });
-          });
-        }
+      if (attrs.uiValidateWatch){
+          apply_watch( scope.$eval(attrs.uiValidateWatch) );
       }
     }
   };
@@ -1247,6 +1298,7 @@ angular.module('ui.utils',  [
   "ui.event",
   "ui.format",
   "ui.highlight",
+  "ui.include",
   "ui.indeterminate",
   "ui.inflector",
   "ui.jq",
