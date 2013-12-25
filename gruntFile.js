@@ -31,6 +31,23 @@ module.exports = function (grunt) {
   grunt.registerTask('publish', fakeTargetTask('publish'));
   //
 
+
+  //
+  var moduleNames = grunt.file.expand({ cwd: 'modules' }, ['*','!utils.js']);
+  function ngMinModulesConfig(memo, moduleName){
+
+     memo[moduleName]= {
+      expand: true,
+      cwd: 'modules/' + moduleName,
+      src: [moduleName + '.js'],
+      dest: 'dist/sub/' + moduleName
+    };
+
+    return memo;
+  }
+  //
+
+
   var testConfig = function(configFile, customOptions) {
     var options = { configFile: configFile, singleRun: true };
     var travisOptions = process.env.TRAVIS && { browsers: ['Firefox', 'PhantomJS'], reporters: ['dots'] };
@@ -85,11 +102,18 @@ module.exports = function (grunt) {
     },
     uglify: {
       options: {banner: '<%= meta.banner %>'},
-      build: {
+      main: {
         files: {
           'dist/main/ui-utils.min.js': ['dist/main/ui-utils.js'],
           'dist/main/ui-utils-ieshiv.min.js': ['dist/main/ui-utils-ieshiv.js']
         }
+      },
+      sub: {
+        expand: true,
+        cwd: 'dist/sub/',
+        src: ['**/*.js'],
+        ext: '.min.js',
+        dest: 'dist/sub/'
       }
     },
     clean: {
@@ -117,7 +141,9 @@ module.exports = function (grunt) {
           {src: ['modules/include/demo/fragments.html'], dest: 'demo/fragments.html', filter: 'isFile'}
         ]
       }
-    }
+    },
+
+    ngmin: moduleNames.reduce(ngMinModulesConfig, {})
   };
   grunt.initConfig(initConfig);
 
