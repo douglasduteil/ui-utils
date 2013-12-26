@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.inflector', []).filter('inflector', function () {
   function ucwords(text) {
     return text.replace(/^([a-z])|\s+([a-z])/g, function ($1) {
@@ -21,7 +22,7 @@ angular.module('ui.inflector', []).filter('inflector', function () {
         return value;
       }
     };
-  return function (text, inflector, separator) {
+  return function (text, inflector) {
     if (inflector !== false && angular.isString(text)) {
       inflector = inflector || 'humanize';
       return inflectors[inflector](text);
