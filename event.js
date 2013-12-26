@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.event', []).directive('uiEvent', [
   '$parse',
   function ($parse) {
