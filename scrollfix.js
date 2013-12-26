@@ -1,7 +1,7 @@
+'use strict';
 angular.module('ui.scrollfix', []).directive('uiScrollfix', [
   '$window',
   function ($window) {
-    'use strict';
     return {
       require: '^?uiScrollfixTarget',
       link: function (scope, elm, attrs, uiScrollfixTarget) {
@@ -37,7 +37,6 @@ angular.module('ui.scrollfix', []).directive('uiScrollfix', [
     };
   }
 ]).directive('uiScrollfixTarget', [function () {
-    'use strict';
     return {
       controller: [
         '$element',
