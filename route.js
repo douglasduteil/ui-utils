@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.route', []).directive('uiRoute', [
   '$location',
   '$parse',
