@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.reset', []).value('uiResetConfig', null).directive('uiReset', [
   'uiResetConfig',
   function (uiResetConfig) {
