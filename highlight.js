@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.highlight', []).filter('highlight', function () {
   return function (text, search, caseSensitive) {
     if (search || angular.isNumber(search)) {
