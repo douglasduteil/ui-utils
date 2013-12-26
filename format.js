@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.format', []).filter('format', function () {
   return function (value, replace) {
     var target = value;
