@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.jq', []).value('uiJqConfig', {}).directive('uiJq', [
   'uiJqConfig',
   '$timeout',
@@ -30,7 +31,7 @@ angular.module('ui.jq', []).value('uiJqConfig', {}).directive('uiJq', [
             }, 0, false);
           }
           if (attrs.uiRefresh) {
-            scope.$watch(attrs.uiRefresh, function (newVal) {
+            scope.$watch(attrs.uiRefresh, function () {
               callPlugin();
             });
           }
