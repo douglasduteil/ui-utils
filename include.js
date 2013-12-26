@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.include', []).directive('uiInclude', [
   '$http',
   '$templateCache',
