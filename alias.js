@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.alias', []).config([
   '$compileProvider',
   'uiAliasConfig',
