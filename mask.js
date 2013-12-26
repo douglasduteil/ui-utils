@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.mask', []).value('uiMaskConfig', {
   'maskDefinitions': {
     '9': /\d/,
@@ -277,6 +278,8 @@ angular.module('ui.mask', []).value('uiMaskConfig', {
             return maskCaretMap.indexOf(pos) > -1;
           }
           function getCaretPosition(input) {
+            if (!input)
+              return 0;
             if (input.selectionStart !== undefined) {
               return input.selectionStart;
             } else if (document.selection) {
@@ -288,6 +291,8 @@ angular.module('ui.mask', []).value('uiMaskConfig', {
             return 0;
           }
           function setCaretPosition(input, pos) {
+            if (!input)
+              return 0;
             if (input.offsetWidth === 0 || input.offsetHeight === 0) {
               return;
             }
@@ -303,6 +308,8 @@ angular.module('ui.mask', []).value('uiMaskConfig', {
             }
           }
           function getSelectionLength(input) {
+            if (!input)
+              return 0;
             if (input.selectionStart !== undefined) {
               return input.selectionEnd - input.selectionStart;
             }
@@ -313,7 +320,6 @@ angular.module('ui.mask', []).value('uiMaskConfig', {
           }
           if (!Array.prototype.indexOf) {
             Array.prototype.indexOf = function (searchElement) {
-              'use strict';
               if (this === null) {
                 throw new TypeError();
               }
