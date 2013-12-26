@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ui.indeterminate', []).directive('uiIndeterminate', [function () {
     return {
       compile: function (tElm, tAttrs) {
@@ -5,7 +6,7 @@ angular.module('ui.indeterminate', []).directive('uiIndeterminate', [function ()
           return angular.noop;
         }
         return function ($scope, elm, attrs) {
-          $scope.$watch(attrs.uiIndeterminate, function (newVal, oldVal) {
+          $scope.$watch(attrs.uiIndeterminate, function (newVal) {
             elm[0].indeterminate = !!newVal;
           });
         };
