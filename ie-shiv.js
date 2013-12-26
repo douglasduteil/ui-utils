@@ -1,5 +1,6 @@
 (function (window, document) {
-  var debug = window.ieShivDebug || false, tags = [
+  'use strict';
+  var tags = [
       'ngInclude',
       'ngPluralize',
       'ngView',
