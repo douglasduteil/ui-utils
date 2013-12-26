@@ -1,9 +1,10 @@
+'use strict';
 angular.module('ui.validate', []).directive('uiValidate', function () {
   return {
     restrict: 'A',
     require: 'ngModel',
     link: function (scope, elm, attrs, ctrl) {
-      var validateFn, watch, validators = {}, validateExpr = scope.$eval(attrs.uiValidate);
+      var validateFn, validators = {}, validateExpr = scope.$eval(attrs.uiValidate);
       if (!validateExpr) {
         return;
       }
